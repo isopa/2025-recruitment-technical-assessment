@@ -66,7 +66,7 @@ Each `recipe` has additionally has `requiredItems`; a **list** of a cookbook ent
     {
       "name": "Mayonaise",
       "quantity": 1
-    }
+    },
     {
       "name": "Lettuce",
       "quantity": 3

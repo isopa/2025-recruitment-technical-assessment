@@ -10,12 +10,27 @@ describe("Task 1", () => {
 
     it("example1", async () => {
       const response = await getTask1("Riz@z RISO00tto!");
-      expect(response.body).toStrictEqual({ msg: "Rizz Risotto" });
+      expect(response.body).toStrictEqual({ msg: "Rizz Risotto" }); 
     });
 
     it("example2", async () => {
       const response = await getTask1("alpHa-alFRedo");
       expect(response.body).toStrictEqual({ msg: "Alpha Alfredo" });
+    });
+
+    it("custom1", async () => {
+      const response = await getTask1("A  B");
+      expect(response.body).toStrictEqual({ msg: "A B" }); 
+    });
+
+    it("custom2", async () => {
+      const response = await getTask1("     This has no leading or trailing spaces   ");
+      expect(response.body).toStrictEqual({ msg: "This Has No Leading Or Trailing Spaces" }); 
+    });
+
+    it("custom3", async () => {
+      const response = await getTask1("Skibidi___Spaghetti  ");
+      expect(response.body).toStrictEqual({ msg: "Skibidi Spaghetti" }); 
     });
 
     it("error case", async () => {
@@ -92,6 +107,58 @@ describe("Task 2", () => {
         cookTime: 8,
       });
       expect(resp3.status).toBe(400);
+    });
+
+
+    //self added tests
+    it("requireditems repeat test", async () => {
+      const resp = await putTask2({
+        type: "recipe",
+        name: "yummers",
+        requiredItems: [
+          {
+            "name": "A",
+            "quantity": 1
+          },
+          {
+            "name": "B",
+            "quantity": 1
+          },
+          {
+            "name": "C",
+            "quantity": 2
+          }
+        ],
+      });
+      expect(resp.status).toBe(200);
+
+      const resp2 = await putTask2({
+        type: "recipe",
+        name: "yummers",
+        requiredItems: [
+          {
+            "name": "Egg",
+            "quantity": 1
+          },
+          {
+            "name": "Egg",
+            "quantity": 45
+          },
+          {
+            "name": "Egg",
+            "quantity": 1
+          },
+          {
+            "name": "Egg",
+            "quantity": 45
+          },
+          {
+            "name": "Egg",
+            "quantity": 1
+          },
+        ],
+      });
+      expect(resp2.status).toBe(400);
     });
   });
 });
